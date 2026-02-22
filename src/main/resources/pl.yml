@@ -1,0 +1,149 @@
+# ================================================================
+#  HexVG-Planets — plik językowy: Polski (pl)
+#  Zmiennych nie edytuj — {0}, {1} itp. są zamieniane przez plugin.
+# ================================================================
+
+general:
+  only_ingame: "&cTa komenda działa tylko w grze."
+  no_permission: "&cBrak uprawnień."
+
+hoth:
+  freeze: "&b❄ Zamarzasz! Znajdź schronienie lub załóż WarmSuit!"
+
+tatooine:
+  heat:
+    water: "&6☀ Woda gasi Twoje pragnienie."
+    thirsty: "&6☀ Zaczynasz odczuwać pragnienie."
+    very_thirsty: "&c☀ Jesteś bardzo spragniony — znajdź wodę!"
+    dying: "&4☀ Umierasz z pragnienia! Znajdź wodę natychmiast!"
+
+dagobah:
+  mosquito:
+    lost: "&2✦ Udało Ci się zgubić rój komarów."
+    hear: "&2✦ Słyszysz nieprzyjemne brzęczenie w pobliżu..."
+    see: "&2✦ Widzisz zbliżający się rój komarów!"
+    attack: "&2✦ Komary atakują! Uciekaj lub wejdź do wody!"
+  leech:
+    lost: "&2✦ Strząsnąłeś pijawki."
+    sense: "&2✦ Coś porusza się w wodzie pod Tobą..."
+    see: "&2✦ Widzisz pijawki w wodzie — wyjdź natychmiast!"
+    attack: "&2✦ Pijawki atakują! Wyjdź z wody!"
+    run: "&2✦ Biegnij żeby strząsnąć pijawki!"
+
+mustafar:
+  heat: "&c🔥 Ekstremalny upał Mustafar parzy Twoje ciało!"
+  lava_near: "&c🔥 Pobliskie jezioro lawy Cię podpala!"
+
+planet:
+  enter: "&6★ &eWylądowałeś na planecie {0}&e."
+  exit: "&7Opuściłeś planetę {0}&7."
+  suit_prefix: "&8  ► "
+  hoth:
+    name: "&bHoth"
+    suit_hint: "&7Potrzebujesz &fWarm Suit &7aby przeżyć mróz."
+  tatooine:
+    name: "&eTatooine"
+    suit_hint: "&7Potrzebujesz &fCooling Suit &7aby przeżyć upał."
+  dagobah:
+    name: "&2Dagobah"
+    suit_hint: "&7Potrzebujesz &fRepellent Suit &7aby odegnać insekty."
+  mustafar:
+    name: "&cMustafar"
+    suit_hint: "&7Potrzebujesz &fGlass Suit &7aby przeżyć żar lawy."
+
+reload:
+  schematic_ok: "&aPrzeładowano schemat: &f{0}"
+  schematic_err: "&cNie znaleziono schematu: &f{0}"
+  done: "&aPrzeładowano plugin. &7({0} schematów)"
+
+info:
+  header: "HexVG-Planets Info"
+  version: "Wersja"
+  schematics: "Schematy"
+  worlds: "Zarejestrowane światy"
+  your_world: "Twój świat"
+  planet_type: "Typ planety"
+  not_planet: "(nie jest planetą)"
+  position: "Pozycja"
+
+list:
+  header: "Schematy"
+
+paste:
+  usage: "&cUżycie: /planetspaste <schemat> [kierunek]"
+  not_found: "&cSchemat nie znaleziony: &f{0}"
+  done: "&aWklejono &f{0} &a({1}). &7Użyj /planetsundo aby cofnąć."
+  dir:
+    north: "północ"
+    south: "południe"
+    east: "wschód"
+    west: "zachód"
+
+undo:
+  nothing: "&cBrak operacji do cofnięcia."
+  done: "&aCofnięto ostatnie wklejenie schematu."
+
+save:
+  usage: "&cUżycie: /planetssave <nazwa>"
+  no_selection: "&cNie masz zaznaczenia. Użyj /planetspos1 i /planetspos2."
+  diff_worlds: "&cOba punkty muszą być w tym samym świecie."
+  done: "&aZapisano schemat &f{0}.sm &a({1}x{2}x{3})."
+  error: "&cBłąd zapisu: {0}"
+
+pos:
+  set: "&7Punkt &b{0} &7ustawiony na {1}"
+  selection: "&7Zaznaczenie: &f{0}x{1}x{2} &7({3} bloków)."
+
+savell:
+  usage: "&cUżycie: /planetssavell <nazwa>"
+  done: "&aZapisano tabelę łupów: &floot/{0}.yml"
+  error: "&cBłąd zapisu: {0}"
+
+addworld:
+  usage: "&cUżycie: /planetsaddworld <świat> [typ]"
+  done: "&aZarejestrowano świat &f{0} &ajako &f{1}."
+
+delworld:
+  usage: "&cUżycie: /planetsdelworld <świat>"
+  done: "&aUsunięto rejestrację świata &f{0}."
+
+setworldtype:
+  usage: "&cUżycie: /planetssetworldtype <świat> <typ>"
+  done: "&aTyp zmieniony na &f{0}."
+  not_found: "&cŚwiat nie jest zarejestrowany."
+
+setworldflag:
+  usage: "&cUżycie: /planetssetworldflag <świat> <flaga> [wartość]"
+  done: "&aFlaga &f{0} &austawiona na &f{1}."
+  not_found: "&cŚwiat nie jest zarejestrowany."
+
+worldinfo:
+  header: "Świat: {0}"
+  header_all: "Zarejestrowane światy ({0})"
+  not_found: "&cŚwiat nie jest zarejestrowany."
+
+region:
+  usage: "&cUżycie: /planetsregion <info|create|list|flag|remove> [...]"
+  usage_flag: "&cUżycie: /planetsregion flag <nazwa> <flaga> [wartość]"
+  usage_remove: "&cUżycie: /planetsregion remove <nazwa>"
+  usage_create: "&cUżycie: /planetsregion create <nazwa> [flaga...]"
+  no_selection: "&cBrak zaznaczenia. Użyj /planetspos1 i /planetspos2."
+  diff_worlds: "&cOba punkty muszą być w tym samym świecie."
+  not_in_region: "&7Nie jesteś w żadnym regionie."
+  header_at: "Regiony w tej lokacji"
+  not_found: "&cRegion nie znaleziony: {0}"
+  flag_set: "&aFlaga &f{0} &austawiona."
+  removed: "&aRegion &f{0} &ausunięty."
+  created: "&aRegion &f{0} &autworzony ({1}x{2}x{3} bloków)."
+  created_flags: "&7Flagi: {0}"
+  list_header: "Regiony"
+  list_empty: "&7Brak zdefiniowanych regionów."
+
+item:
+  usage: "&cUżycie: /planetsitem <warm|cooling|repellent|glass> [gracz]"
+  usage_hint: "&7Dostępne: &bwarm &7(Hoth) &6cooling &7(Tatooine) &arep &7(Dagobah) &cglass &7(Mustafar)"
+  unknown: "&cNieznany kombinezon: &b{0} &c— użyj: warm, cooling, repellent, glass"
+  player_only: "&cPodaj nazwę gracza: /planetsitem <suit> <gracz>"
+  not_online: "&cGracz &b{0} &cnie jest online."
+  given: "&aDano &6{0} &agraczowi &b{1}&a."
+  received: "&a[HexVG-Planets] Otrzymałeś kombinezon: &6{0}"

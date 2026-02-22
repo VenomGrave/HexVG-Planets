@@ -1,0 +1,145 @@
+name: HexVG-Planets
+version: "${project.version}"
+main: com.venomgrave.hexvg.HexVGPlanets
+api-version: "1.20"
+load: STARTUP
+description: Star Wars themed planet world generator - Hoth, Tatooine, Dagobah, Mustafar
+authors: [ VenomGrave ]
+
+loadbefore:
+  - Multiverse-Core
+  - multiworld
+
+commands:
+  planetsreload:
+    description: Reload HexVG-Planets config.
+    usage: /planetsreload
+    permission: hexvg.planets.reload
+
+  planetspaste:
+    description: Paste a schematic at your location.
+    usage: /planetspaste <schematic> [north|east|south|west]
+    permission: hexvg.planets.paste
+
+  planetsundo:
+    description: Undo the last schematic paste.
+    usage: /planetsundo
+    permission: hexvg.planets.undo
+
+  planetslist:
+    description: List all available schematics.
+    usage: /planetslist
+    permission: hexvg.planets.list
+
+  planetsinfo:
+    description: Show plugin and world info.
+    usage: /planetsinfo
+    permission: hexvg.planets.info
+
+  planetsaddworld:
+    description: Register a world with HexVG-Planets.
+    usage: /planetsaddworld <worldname> <hoth|tatooine|dagobah|mustafar>
+    permission: hexvg.planets.addworld
+
+  planetsdelworld:
+    description: Unregister a world from HexVG-Planets.
+    usage: /planetsdelworld <worldname>
+    permission: hexvg.planets.delworld
+
+  planetssetworldtype:
+    description: Change the planet type of a registered world.
+    usage: /planetssetworldtype <worldname> <hoth|tatooine|dagobah|mustafar>
+    permission: hexvg.planets.setworldtype
+
+  planetssetworldflag:
+    description: Override a config flag for a specific world.
+    usage: /planetssetworldflag <worldname> <flag> [value]
+    permission: hexvg.planets.setworldflag
+
+  planetsworldinfo:
+    description: Print info about registered worlds.
+    usage: /planetsworldinfo [worldname]
+    permission: hexvg.planets.worldinfo
+
+  planetsregion:
+    description: Manage per-region flag overrides.
+    usage: /planetsregion <info|flag|remove> [params...]
+    permission: hexvg.planets.region
+
+  planetssavell:
+    description: Save a loot list to disk.
+    usage: /planetssavell <filename>
+    permission: hexvg.planets.savell
+
+  planetssave:
+    description: Zapisz zaznaczony obszar jako schemat.
+    usage: /planetssave <nazwa>
+    permission: hexvg.planets.paste
+
+  planetspos1:
+    description: Ustaw punkt 1 zaznaczenia na bieżącej pozycji.
+    usage: /planetspos1
+    permission: hexvg.planets.paste
+
+  planetspos2:
+    description: Ustaw punkt 2 zaznaczenia na bieżącej pozycji.
+    usage: /planetspos2
+    permission: hexvg.planets.paste
+
+  planetsitem:
+    description: Daj kombinezon ochronny planety.
+    usage: /planetsitem <warm|cooling|repellent|glass> [gracz]
+    permission: hexvg.planets.item
+
+
+permissions:
+
+  hexvg.planets.*:
+    description: Full access to all HexVG-Planets commands.
+    children:
+      hexvg.planets.reload: true
+      hexvg.planets.paste: true
+      hexvg.planets.undo: true
+      hexvg.planets.list: true
+      hexvg.planets.info: true
+      hexvg.planets.addworld: true
+      hexvg.planets.delworld: true
+      hexvg.planets.setworldtype: true
+      hexvg.planets.setworldflag: true
+      hexvg.planets.worldinfo: true
+      hexvg.planets.region: true
+      hexvg.planets.savell: true
+      hexvg.planets.save: true
+      hexvg.planets.item: true
+
+  hexvg.planets.reload:       { default: op }
+  hexvg.planets.paste:        { default: op }
+  hexvg.planets.undo:         { default: op }
+  hexvg.planets.list:         { default: op }
+  hexvg.planets.info:         { default: op }
+  hexvg.planets.addworld:     { default: op }
+  hexvg.planets.delworld:     { default: op }
+  hexvg.planets.setworldtype: { default: op }
+  hexvg.planets.setworldflag: { default: op }
+  hexvg.planets.worldinfo:    { default: op }
+  hexvg.planets.region:       { default: op }
+  hexvg.planets.savell:       { default: op }
+  hexvg.planets.save:         { default: op }
+  hexvg.planets.item:         { default: op }
+
+  # Efekty środowiskowe – domyślnie włączone dla wszystkich graczy
+  hexvg.planets.env.freeze:
+    description: Gracz otrzymuje obrażenia od mrozu (Hoth).
+    default: true
+  hexvg.planets.env.heat:
+    description: Gracz otrzymuje obrażenia od upału (Tatooine).
+    default: true
+  hexvg.planets.env.leech:
+    description: Gracz jest atakowany przez pijawki (Dagobah).
+    default: true
+  hexvg.planets.env.mosquito:
+    description: Gracz jest atakowany przez komary (Dagobah).
+    default: true
+  hexvg.planets.env.lavaburn:
+    description: Gracz otrzymuje obrażenia od lawy (Mustafar).
+    default: true

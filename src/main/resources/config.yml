@@ -1,0 +1,127 @@
+# ================================================================
+#  HexVG-Planets config.yml
+#  Opcje globalne. Większość można nadpisać per-świat przez:
+#  /planetssetworldflag <world> <flag> <wartość>
+# ================================================================
+
+planets:
+
+  # --- Debugowanie ---
+  debug: false
+
+  # --- Generacja terenu ---
+  # Przesuwa powierzchnię w górę (0 = domyślna wysokość)
+  world.surfaceoffset: 0
+  # Płynna pokrywa śniegiem (Hoth)
+  smoothsnow: true
+  # Płynna pokrywa lawa (Mustafar)
+  smoothlava: true
+
+  # --- Struktury (rarity: 0=wył, 1=często, 10=bardzo rzadko) ---
+  structure.spikes.rarity: 2
+  structure.gardens.rarity: 2
+  structure.domes.rarity: 3
+  structure.domes.placeminidome: true
+  structure.bases.rarity: 2
+  structure.bases.spawner: true
+  structure.mazes.rarity: 2
+  structure.mazes.minrooms: 8
+  structure.mazes.maxrooms: 32
+  structure.mazes.spawner: true
+  structure.skeletons.rarity: 2
+  structure.sandcastle.rarity: 2
+  structure.village.rarity: 2
+  structure.supergarden.rarity: 2
+  structure.oasis.rarity: 2
+  structure.sarlacc.rarity: 2
+  structure.hugetree.rarity: 2
+  structure.spiderforest.rarity: 2
+  structure.swamptemple.rarity: 2
+  structure.treehut.rarity: 2
+  structure.mustafarbase.rarity: 2
+  structure.mustafartemple.rarity: 2
+  structure.mushroomhuts.rarity: 2
+
+  # --- Generacja ---
+  generate.logs: true
+  generate.caves.rarity: 2
+  generate.ores: true
+  generate.cactuses: true
+  generate.shrubs: true
+  generate.mushroomhuts: true
+  generate.extendedore: true
+
+  # --- Zasady gry ---
+  rules.dropice: true
+  rules.droppackedice: true
+  rules.dropsnow: true
+  rules.freezewater: true
+  rules.freezelava: true
+  rules.plantsgrow: false
+  rules.grassspread: false
+  rules.stopmelt: true
+  rules.limitslime: true
+  rules.snowgravity: false
+  rules.volcanoes: true
+  rules.lessstone: true
+  rules.lavaburn: true
+  rules.placewater: true
+  rules.spawn.mustafar: false
+  rules.spawn.schematic_entity: true
+  rules.spawn.neutral.on: true
+  rules.spawn.neutral.rarity: 2
+  rules.spawn.neutral.mobs: "chicken,cow,pig,sheep,wolf"
+
+  # --- Środowisko – okres sprawdzania (w sekundach, 0=wył) ---
+  rules.environment.period: 2
+  rules.environment.suit: true
+
+  # Mróz (Hoth)
+  rules.freeze.damage: 2
+  rules.freeze.stormdamage: 1
+  rules.freeze.message: "&bZamarzasz. Znajdź schronienie!"
+
+  # Upał (Tatooine)
+  rules.heat.damage: 2
+  rules.heat.message1: "&6Woda gasi twoje pragnienie."
+  rules.heat.message2: "&6Zaczynasz odczuwać pragnienie."
+  rules.heat.message3: "&6Jesteś bardzo spragniony."
+  rules.heat.message4: "&6Jesteś wykończony z gorąca. Znajdź wodę lub cień!"
+
+  # Komary (Dagobah)
+  rules.mosquito.damage: 1
+  rules.mosquito.rarity: 5
+  rules.mosquito.runfree: 10
+  rules.mosquito.message1: "&2Zdaje się, że zgubiłeś rój komarów."
+  rules.mosquito.message2: "&2Słyszysz brzęczenie gdzieś w pobliżu."
+  rules.mosquito.message3: "&2Widzisz ogromny rój komarów w pobliżu."
+  rules.mosquito.message4: "&2Komary cię atakują! Uciekaj!!"
+
+  # Pijawki (Dagobah)
+  rules.leech.damage: 1
+  rules.leech.rarity: 5
+  rules.leech.message1: "&2Udało ci się pozbyć wszystkich pijawek."
+  rules.leech.message2: "&2Zauważasz coś poruszającego się w wodzie."
+  rules.leech.message3: "&2Widzisz pijawki w wodzie."
+  rules.leech.message4: "&2Pijawki cię atakują! Wyjdź z wody!"
+  rules.leech.message5: "&2Pijawki cię wysysają, biegnij żeby je strząsnąć!"
+
+  # Repulsor Field Generator (Mustafar)
+  rules.rfg.enable: true
+  rules.rfg.coal: 5
+  rules.rfg.redstone: 10
+  rules.rfg.name: "Repulsor Field Generator"
+  rules.rfg.message1: "&cPotrzebujesz Repulsor Field Generator aby wydobyć rudę z lawy."
+  rules.rfg.message2: "&cPotrzebujesz Redstone aby zasilić Repulsor Field Generator."
+  rules.rfg.message3: "&cPotrzebujesz Węgiel aby zasilić Repulsor Field Generator."
+  rules.rfg.message4: "&cBrakuje miejsca w ekwipunku."
+
+  # --- Receptury (crafting) ---
+  recipe.warm.suit.name: "Warm Suit"
+  recipe.warm.suit.description: "Chroni przed zimnem"
+  recipe.repellent.suit.name: "Repellent Suit"
+  recipe.repellent.suit.description: "Chroni przed komarami i pijawkami"
+  recipe.cooling.suit.name: "Cooling Suit"
+  recipe.cooling.suit.description: "Chroni przed odwodnieniem"
+  recipe.glass.suit.name: "Glass Suit"
+  recipe.glass.suit.description: "Chroni przed poparzeniami"
