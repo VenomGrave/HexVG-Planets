@@ -1,6 +1,5 @@
 package com.venomgrave.hexvg.schematic;
 
-
 public class Schematic {
 
     private final String name;
@@ -14,10 +13,10 @@ public class Schematic {
 
     public Schematic(String name, int width, int height, int length,
                      int lootMin, int lootMax, SchematicBlock[][][] blocks) {
-        this.name   = name;
-        this.width  = width;
-        this.height = height;
-        this.length = length;
+        this.name    = name;
+        this.width   = width;
+        this.height  = height;
+        this.length  = length;
         this.lootMin = lootMin;
         this.lootMax = lootMax;
         this.blocks  = blocks;

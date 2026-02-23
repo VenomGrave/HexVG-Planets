@@ -13,6 +13,7 @@ import com.venomgrave.hexvg.schematic.SchematicRegistry;
 import com.venomgrave.hexvg.task.TaskQueue;
 import com.venomgrave.hexvg.util.MessageFormatter;
 import com.venomgrave.hexvg.world.PlanetType;
+import com.venomgrave.hexvg.item.RFGItem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -21,9 +22,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.Material;
 
 import java.util.List;
-
 
 public class HexVGPlanets extends JavaPlugin {
 
@@ -54,7 +58,6 @@ public class HexVGPlanets extends JavaPlugin {
     private VolcanoManager volcanoManager;
     private MobSpawnManager mobSpawnManager;
     private SpiderForestManager spiderForestManager;
-
 
     @Override
     public void onEnable() {
@@ -120,8 +123,12 @@ public class HexVGPlanets extends JavaPlugin {
             }
         }, 1L);
 
+        // Rejestracja suitów
         Bukkit.getScheduler().runTaskLater(this, () ->
                 RecipeManager.registerAll(this), 1L);
+
+        // 🔥 Rejestracja craftingu RFG
+        registerRfgRecipe();
 
         saveResourceSilently("custom/example.sm");
         saveResourceSilently("custom/example.ol");
@@ -148,19 +155,16 @@ public class HexVGPlanets extends JavaPlugin {
         getLogger().info("HexVG-Planets disabled.");
     }
 
-
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         PlanetType type = PlanetType.fromString(id != null ? id : "");
         return new PlanetChunkGenerator(worldName, type);
     }
 
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return CommandHandler.handle(this, sender, cmd, args);
     }
-
 
     public boolean isPlanetWorld(World world) {
         return worldConfigManager.isRegistered(world.getName());
@@ -191,10 +195,25 @@ public class HexVGPlanets extends JavaPlugin {
     public TaskQueue getTaskQueue()                   { return taskQueue; }
     public SpiderForestManager getSpiderForestManager() { return spiderForestManager; }
 
-
     private void saveResourceSilently(String path) {
         try {
             saveResource(path, true);
         } catch (Exception ignored) { }
+    }
+
+    // 🔥 NOWA METODA — crafting RFG
+    private void registerRfgRecipe() {
+        String displayName = configManager.getString("rules.rfg.name", "Repulsor Field Generator");
+
+        ItemStack rfg = RFGItem.create(displayName);
+
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(this, "rfg_item"), rfg);
+        recipe.shape("CRC", "RTR", "CRC");
+
+        recipe.setIngredient('C', Material.COAL);
+        recipe.setIngredient('R', Material.REDSTONE);
+        recipe.setIngredient('T', Material.REDSTONE_TORCH);
+
+        getServer().addRecipe(recipe);
     }
 }

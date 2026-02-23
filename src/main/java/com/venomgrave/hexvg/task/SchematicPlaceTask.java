@@ -5,9 +5,7 @@ import com.venomgrave.hexvg.loot.LootGenerator;
 import com.venomgrave.hexvg.schematic.Schematic;
 import com.venomgrave.hexvg.schematic.SchematicPlacer;
 import com.venomgrave.hexvg.schematic.SchematicRotator;
-
 import org.bukkit.World;
-
 
 public class SchematicPlaceTask implements Runnable {
 
@@ -16,22 +14,24 @@ public class SchematicPlaceTask implements Runnable {
     private final Schematic schematic;
     private final int x, y, z;
     private final int direction;
+    private final LootGenerator lootGenerator;
 
     public SchematicPlaceTask(HexVGPlanets plugin, World world,
-                              Schematic schematic, int x, int y, int z, int direction) {
-        this.plugin    = plugin;
-        this.world     = world;
-        this.schematic = schematic;
-        this.x         = x;
-        this.y         = y;
-        this.z         = z;
-        this.direction = direction;
+                              Schematic schematic, int x, int y, int z, int direction,
+                              LootGenerator lootGenerator) {
+        this.plugin        = plugin;
+        this.world         = world;
+        this.schematic     = schematic;
+        this.x             = x;
+        this.y             = y;
+        this.z             = z;
+        this.direction     = direction;
+        this.lootGenerator = lootGenerator;
     }
 
     @Override
     public void run() {
         Schematic rotated = SchematicRotator.rotate(schematic, direction);
-        LootGenerator loot = plugin.getLootGenerator();
-        SchematicPlacer.place(world, rotated, x, y, z, loot);
+        SchematicPlacer.place(world, rotated, x, y, z, lootGenerator);
     }
 }

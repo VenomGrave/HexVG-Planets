@@ -556,6 +556,20 @@ public class CommandHandler {
                 tag = RecipeManager.REPELLENT_SUIT_TAG; label = "Repellent Suit"; break;
             case "glass": case "mustafar":
                 tag = RecipeManager.GLASS_SUIT_TAG;     label = "Glass Suit";     break;
+
+
+            case "rfg": case "repulsor": case "generator":
+                String rfgName = plugin.getConfigManager()
+                        .getString("rules.rfg.name", "Repulsor Field Generator");
+                target.getInventory().addItem(
+                        com.venomgrave.hexvg.item.RFGItem.create(rfgName)
+                );
+                MessageFormatter.sendInfo(sender, lang(plugin, "item.given", rfgName, target.getName()));
+                if (!target.equals(sender)) {
+                    target.sendMessage(lang(plugin, "item.received", rfgName));
+                }
+                return true;
+
             default:
                 MessageFormatter.sendErr(sender, lang(plugin, "item.unknown", args[0]));
                 return true;
@@ -575,6 +589,7 @@ public class CommandHandler {
         }
         return true;
     }
+
 
     private static String dirName(HexVGPlanets plugin, int dir) {
         switch (dir) {

@@ -3,19 +3,20 @@ package com.venomgrave.hexvg.schematic;
 import org.bukkit.Material;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class SchematicLoader {
 
     public static Schematic load(InputStream in, String name) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
         String schName = name;
         int width = 0, height = 0, length = 0;
         int lootMin = 2, lootMax = 10;
-        List<int[]> coords    = new ArrayList<>();
+
+        List<int[]> coords = new ArrayList<>();
         List<SchematicBlock> blockList = new ArrayList<>();
         boolean inBlocks = false;
 
@@ -30,15 +31,19 @@ public class SchematicLoader {
             }
             if (line.startsWith("size:")) {
                 String[] parts = line.substring(5).trim().split("\\s+");
-                width  = Integer.parseInt(parts[0]);
-                height = Integer.parseInt(parts[1]);
-                length = Integer.parseInt(parts[2]);
+                if (parts.length >= 3) {
+                    width  = Integer.parseInt(parts[0]);
+                    height = Integer.parseInt(parts[1]);
+                    length = Integer.parseInt(parts[2]);
+                }
                 continue;
             }
             if (line.startsWith("loot:")) {
                 String[] parts = line.substring(5).trim().split("\\s+");
-                lootMin = Integer.parseInt(parts[0]);
-                lootMax = Integer.parseInt(parts[1]);
+                if (parts.length >= 2) {
+                    lootMin = Integer.parseInt(parts[0]);
+                    lootMax = Integer.parseInt(parts[1]);
+                }
                 continue;
             }
             if (line.equals("blocks:")) {
@@ -72,6 +77,10 @@ public class SchematicLoader {
         }
         reader.close();
 
+        if (width <= 0 || height <= 0 || length <= 0) {
+            throw new IOException("Invalid schematic size for " + schName);
+        }
+
         SchematicBlock[][][] blocks = new SchematicBlock[height][length][width];
         for (int y = 0; y < height; y++)
             for (int z = 0; z < length; z++)
@@ -80,9 +89,9 @@ public class SchematicLoader {
 
         for (int i = 0; i < coords.size(); i++) {
             int[] c = coords.get(i);
-            if (c[0] < height && c[1] < length && c[2] < width) {
-                blocks[c[0]][c[1]][c[2]] = blockList.get(i);
-            }
+            if (c[0] < 0 || c[1] < 0 || c[2] < 0) continue;
+            if (c[0] >= height || c[1] >= length || c[2] >= width) continue;
+            blocks[c[0]][c[1]][c[2]] = blockList.get(i);
         }
 
         return new Schematic(schName, width, height, length, lootMin, lootMax, blocks);

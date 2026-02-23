@@ -7,23 +7,23 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-
 
 public class PlanetTabCompleter implements TabCompleter {
 
-    private static final List<String> PLANET_TYPES = Arrays.asList("hoth", "tatooine", "dagobah", "mustafar"
+    private static final List<String> PLANET_TYPES = Arrays.asList(
+            "hoth", "tatooine", "dagobah", "mustafar"
     );
 
-    private static final List<String> DIRECTIONS = Arrays.asList("north", "east", "south", "west"
+    private static final List<String> DIRECTIONS = Arrays.asList(
+            "north", "east", "south", "west"
     );
 
-    private static final List<String> REGION_SUBS = Arrays.asList("info", "create", "list", "flag", "remove"
+    private static final List<String> REGION_SUBS = Arrays.asList(
+            "info", "create", "list", "flag", "remove"
     );
 
     private static final List<String> WORLD_FLAGS = Arrays.asList(
@@ -42,6 +42,12 @@ public class PlanetTabCompleter implements TabCompleter {
             "lavaimmune", "freezeimmune", "heatimmune"
     );
 
+    // 🔥 NOWE: typy itemów dla planetsitem
+    private static final List<String> ITEM_TYPES = Arrays.asList(
+            "warm", "cooling", "repellent", "glass",
+            "rfg", "repulsor", "generator"
+    );
+
     private final HexVGPlanets plugin;
 
     public PlanetTabCompleter(HexVGPlanets plugin) {
@@ -51,6 +57,7 @@ public class PlanetTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd,
                                       String alias, String[] args) {
+
         String name = cmd.getName().toLowerCase();
 
         switch (name) {
@@ -71,13 +78,14 @@ public class PlanetTabCompleter implements TabCompleter {
             case "planetspaste":
                 return completePaste(args);
 
-            case "planetspos1":
-            case "planetspos2":
-                return Collections.emptyList();
-
             case "planetsregion":
                 return completeRegion(args);
 
+            case "planetsitem":
+                return completeItem(args);
+
+            case "planetspos1":
+            case "planetspos2":
             case "planetsreload":
             case "planetsinfo":
             case "planetslist":
@@ -90,10 +98,28 @@ public class PlanetTabCompleter implements TabCompleter {
         }
     }
 
+    // -------------------------
+    // planetsitem <type> <player>
+    // -------------------------
+    private List<String> completeItem(String[] args) {
+        // /planetsitem <type>
+        if (args.length == 1) {
+            return filterPrefix(ITEM_TYPES, args[0]);
+        }
+
+        // /planetsitem <type> <player>
+        if (args.length == 2) {
+            return Bukkit.getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .filter(n -> n.toLowerCase().startsWith(args[1].toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList();
+    }
 
     private List<String> completeAddWorld(String[] args) {
         if (args.length == 1) {
-            // Podpowiedz wszystkie załadowane światy których jeszcze nie zarejestrowano
             return Bukkit.getWorlds().stream()
                     .map(World::getName)
                     .filter(w -> !plugin.getWorldConfigManager().isRegistered(w))
@@ -106,7 +132,6 @@ public class PlanetTabCompleter implements TabCompleter {
         return Collections.emptyList();
     }
 
-
     private List<String> completeRegisteredWorld(String[] args, int pos) {
         if (args.length == pos) {
             String prefix = args[pos - 1].toLowerCase();
@@ -117,13 +142,11 @@ public class PlanetTabCompleter implements TabCompleter {
         return Collections.emptyList();
     }
 
-
     private List<String> completeSetWorldType(String[] args) {
         if (args.length == 1) return completeRegisteredWorld(args, 1);
         if (args.length == 2) return filterPrefix(PLANET_TYPES, args[1]);
         return Collections.emptyList();
     }
-
 
     private List<String> completeSetWorldFlag(String[] args) {
         if (args.length == 1) return completeRegisteredWorld(args, 1);
@@ -136,7 +159,6 @@ public class PlanetTabCompleter implements TabCompleter {
         }
         return Collections.emptyList();
     }
-
 
     private List<String> completePaste(String[] args) {
         if (args.length == 1) {
@@ -151,7 +173,6 @@ public class PlanetTabCompleter implements TabCompleter {
         }
         return Collections.emptyList();
     }
-
 
     private List<String> completeRegion(String[] args) {
         if (args.length == 1) {
@@ -175,7 +196,6 @@ public class PlanetTabCompleter implements TabCompleter {
                 return Collections.emptyList();
         }
     }
-
 
     private List<String> filterPrefix(List<String> candidates, String prefix) {
         String lp = prefix.toLowerCase();

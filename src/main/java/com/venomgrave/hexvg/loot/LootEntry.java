@@ -3,6 +3,7 @@ package com.venomgrave.hexvg.loot;
 import org.bukkit.Material;
 
 public class LootEntry {
+
     private final Material material;
     private final int weight;
     private final int min;
@@ -10,9 +11,9 @@ public class LootEntry {
 
     public LootEntry(Material material, int weight, int min, int max) {
         this.material = material;
-        this.weight   = weight;
-        this.min      = min;
-        this.max      = max;
+        this.weight   = Math.max(1, weight); // weight must be >= 1
+        this.min      = Math.min(min, max);  // ensure min <= max
+        this.max      = Math.max(min, max);
     }
 
     public Material getMaterial() { return material; }

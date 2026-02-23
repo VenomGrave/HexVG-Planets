@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 
-
 public class LootGenerator {
 
     private final HexVGPlanets plugin;
@@ -26,7 +25,6 @@ public class LootGenerator {
     public void load() {
         tables.clear();
 
-        // Load from data folder
         File dir = new File(plugin.getDataFolder(), "loot");
         if (dir.exists()) {
             File[] files = dir.listFiles((d, n) -> n.endsWith(".yml"));
@@ -34,9 +32,10 @@ public class LootGenerator {
                 for (File f : files) {
                     try {
                         LootTable t = LootTable.load(YamlConfiguration.loadConfiguration(f));
-                        tables.put(t.getName(), t);
+                        tables.put(t.getName().toLowerCase(), t);
                     } catch (Exception e) {
-                        plugin.getLogger().log(Level.WARNING, "Failed to load loot table: " + f.getName(), e);
+                        plugin.getLogger().log(Level.WARNING,
+                                "Failed to load loot table: " + f.getName(), e);
                     }
                 }
             }
@@ -45,21 +44,21 @@ public class LootGenerator {
         buildDefaultTable();
     }
 
-    public void fill(Inventory inv) {
-        fill(inv, defaultTable,
-                defaultTable.getMinItems(),
-                defaultTable.getMaxItems());
+    public void fillDefault(Inventory inv) {
+        fill(inv, defaultTable, defaultTable.getMinItems(), defaultTable.getMaxItems());
     }
 
-    public void fill(Inventory inv, String tableName, int minItems, int maxItems) {
-        LootTable t = tables.getOrDefault(tableName, defaultTable);
-        fill(inv, t, minItems, maxItems);
+    public void fillForSchematic(Inventory inv, String schematicName, int min, int max) {
+        LootTable t = tables.getOrDefault(schematicName.toLowerCase(), defaultTable);
+        fill(inv, t, min, max);
     }
 
     private void fill(Inventory inv, LootTable table, int min, int max) {
         if (table == null || table.getEntries().isEmpty()) return;
+        if (max <= 0) return;
 
         int count = min + random.nextInt(Math.max(1, max - min + 1));
+
         List<Integer> slots = new ArrayList<>();
         for (int i = 0; i < inv.getSize(); i++) slots.add(i);
         Collections.shuffle(slots, random);
@@ -67,7 +66,11 @@ public class LootGenerator {
         for (int i = 0; i < Math.min(count, slots.size()); i++) {
             LootEntry entry = table.roll(random);
             if (entry == null) continue;
-            int qty = entry.getMin() + random.nextInt(Math.max(1, entry.getMax() - entry.getMin() + 1));
+
+            int qty = entry.getMin() + random.nextInt(
+                    Math.max(1, entry.getMax() - entry.getMin() + 1)
+            );
+
             inv.setItem(slots.get(i), new ItemStack(entry.getMaterial(), qty));
         }
     }
@@ -87,6 +90,7 @@ public class LootGenerator {
                 new LootEntry(Material.BOW,              3, 1, 1),
                 new LootEntry(Material.ARROW,            8, 4, 16)
         ));
+
         defaultTable = new LootTable("default", entries, 3, 10);
     }
 }
